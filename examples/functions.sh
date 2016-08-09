@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# @author: James D <james@jdrydn.com>
+# @license: MIT
+# @link: https://github.com/jdrydn/require-bash
+#
 
 # A function for you to say HELLO
 function say_hello() {
@@ -12,4 +16,3 @@ SPACE
     SPACEEEEE
 EOT
 }
-
