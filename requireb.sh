@@ -31,7 +31,7 @@ function absolute_filepath() {
   local file="$2"
 
   while [[ "$file" == ../* ]]; do
-    file="${file:3}"
+    file="$(echo "$file" | cut -c 4-)"
     dir="$(dirname $dir)"
   done
 
@@ -117,6 +117,11 @@ for VAR in "$@"; do
     --*) vprint 1 "Unknown flag '$VAR'" ;;
   esac
 done
+
+# If this script is being source'd (like, for tests, etc)
+# Then allow knowledge of the functions
+# And don't throw an error
+[[ "${BASH_SOURCE[0]}" != "${0}" ]] && return 0;
 
 # If the user forgot to pass an input file, throw an error
 if [[ -z "$1" ]]; then
