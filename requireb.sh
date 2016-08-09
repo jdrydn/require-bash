@@ -1,5 +1,4 @@
-#!/bin/bash
-#
+#!/usr/bin/env bash
 # @author: James D <james@jdrydn.com>
 # @license: MIT
 # @link: https://github.com/jdrydn/require-bash
@@ -19,7 +18,7 @@ let OPT_VERBOSE=0
 # Given the complete 'require "file.sh"' line
 function extract_file() {
   local file="$(echo $1 | sed -e s/require\ //)"
-  file=${file:1:(-1)}
+  file="$(echo "$file" | cut -d "'" -f2 | cut -d '"' -f2)"
 
   echo $file
   return 0
@@ -33,7 +32,7 @@ function absolute_filepath() {
 
   while [[ "$file" == ../* ]]; do
     file="${file:3}"
-	dir="$(dirname $dir)"
+    dir="$(dirname $dir)"
   done
 
   echo "$dir/$file"
@@ -45,14 +44,15 @@ function absolute_filepath() {
 function vprint() {
   let level=0
   local statement="$@"
+
   if [[ "$#" == "2" ]]; then
     let level=$1
-	shift
-	statement="$@"
+    shift
+	  statement="$@"
   fi
 
   if [ "$OPT_VERBOSE" -ge "$level" ]; then
-	OUTPUT=$(printf "%s%s" "$OUTPUT" "#[requireb]: $statement\n")
+    OUTPUT=$(printf "%s%s" "$OUTPUT" "#[requireb]: $statement\n")
   fi
 }
 
@@ -69,21 +69,22 @@ function require_file() {
   vprint 1 "$file"
 
   if [[ ! -e $file ]]; then
-	throw_err "FAILED TO FIND $file WITH '$1' AT '$2'"
-	return 1
+    throw_err "FAILED TO FIND $file WITH '$1' AT '$2'"
+    return 1
   fi
 
   while IFS='' read -r LINE; do
-	case "$LINE" in
-	  \#!*) continue;;
-	  \#*) $OPT_STRIP_COMMENTS && continue;;
-	  require*)
-	    require_file "$LINE" "$(dirname "$file")"
-		continue
-		;;
-	esac
+    case "$LINE" in
+      \#!*) continue;;
+      \#*) $OPT_STRIP_COMMENTS && continue;;
+      require*)
+        require_file "$LINE" "$(dirname "$file")"
+        OUTPUT=$(printf "%s%s" "$OUTPUT" "\n")
+    	  continue
+        ;;
+    esac
 
-	OUTPUT=$(printf "%s%s" "$OUTPUT" "$LINE\n")
+    OUTPUT=$(printf "%s%s" "$OUTPUT" "$LINE\n")
   done <"$file"
 
   return 0
@@ -111,9 +112,9 @@ EOH
 for VAR in "$@"; do
   case "$VAR" in
     -v*) let OPT_VERBOSE=$(expr ${#VAR} - 1) ;;
-	"--help") print_help; exit 0 ;;
+	  "--help") print_help; exit 0 ;;
     "--strip-comments") OPT_STRIP_COMMENTS=true ;;
-	--*) vprint 1 "Unknown flag '$VAR'" ;;
+    --*) vprint 1 "Unknown flag '$VAR'" ;;
   esac
 done
 
@@ -132,4 +133,3 @@ vprint 1 "verbose level: $OPT_VERBOSE"
 require_file "require '$1'" "$(pwd)"
 # And print the completed script
 printf "$OUTPUT"
-
