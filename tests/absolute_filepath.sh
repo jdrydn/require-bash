@@ -17,3 +17,6 @@ assert_equal "$(absolute_filepath "/home/ubuntu/folder" "sub/file.sh")" "/home/u
 
 echo "It should find a file in a parent directory"
 assert_equal "$(absolute_filepath "/home/ubuntu/folder" "../file.sh")" "/home/ubuntu/file.sh"
+
+echo "It should find a file in an extreme parent directory"
+assert_equal "$(absolute_filepath "/home" "../../../../../../../../../file.sh")" "/file.sh"

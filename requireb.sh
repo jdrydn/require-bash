@@ -35,7 +35,9 @@ function absolute_filepath() {
     dir="$(dirname $dir)"
   done
 
+  [[ "$dir" == "/" ]] && dir=""
   echo "$dir/$file"
+
   return 0
 }
 
