@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-
+# @author: James D <james@jdrydn.com>
+# @license: MIT
+# @link: https://github.com/jdrydn/require-bash
+#
 function assert_equal() {
   if [[ "$1" == "$2" ]]; then
     printf "[requireb][tests][$ASSERT_PREFIX] [Y]\n\n"

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-
+# @author: James D <james@jdrydn.com>
+# @license: MIT
+# @link: https://github.com/jdrydn/require-bash
+#
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source "$(dirname $DIR)/requireb.sh"
