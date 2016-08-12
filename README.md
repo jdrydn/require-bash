@@ -51,7 +51,32 @@ $ ~/require-bash/requireb.sh input.sh > output.sh
 $ bash output.sh
 ```
 
-## Notes
+The quickest way to get this running is:
 
-- Questions? Awesome! [Open an issue](https://github.com/jdrydn/require-bash/issues/)
-  [or a pull-request](https://github.com/jdrydn/require-bash/pulls/) to get started!
+```
+# Clone it from Github
+$ git clone github.com:jdrydn/require-bash ~/.requireb
+# And run it
+$ ~/.requireb/requireb.sh --help
+```
+
+If you plan to use this often, add an alias to your `.shellrc` file:
+
+```
+# Create an alias in your .shellrc file
+$ echo "alias requireb='~/.requireb/requireb.sh'" >> ~/.bashrc
+# Reload your shell
+$ source ~/.bashrc
+# And try
+$ requireb --help
+```
+
+You can always be sure that the MASTER branch of this repository contains a stable build. Any features or fixes will be worked on in a branch & merged in on completion.
+
+There are also some unit-tests, written completely in Bash, which you are welcome to run with:
+
+```
+$ ./tests/run.sh
+```
+
+[Pull-requests are welcome](https://github.com/jdrydn/require-bash/pulls/), of course, and ideally should include some tests to specifically test the commit(s) in question. And if any bugs or problems arise [please open an issue](https://github.com/jdrydn/require-bash/issues/) :smile:
