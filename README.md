@@ -43,14 +43,6 @@ Finished ^_^
 
 ## In your projects
 
-```
-# Pull down the require-bash project
-$ git clone https://github.com/jdrydn/require-bash ~/require-bash
-$ cd ~/path/to/my/project
-$ ~/require-bash/requireb.sh input.sh > output.sh
-$ bash output.sh
-```
-
 The quickest way to get this running is:
 
 ```
