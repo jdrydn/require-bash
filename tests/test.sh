@@ -2,10 +2,10 @@
 # @author: James D <james@jdrydn.com>
 # @license: MIT
 # @link: https://github.com/jdrydn/require-bash
-#
+
 # Execute bash tests
 # One at a time
-#
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function run_test() {
